@@ -1,5 +1,225 @@
-<div class="grid h-screen place-items-center">
-  <div class="font-bold text-3xl">
-    Fyle Internship Challenge
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .main_loader {
+      /* display: block; */
+      display: none;
+    }
+
+    .msg_no_repo {
+      display: block;
+    }
+
+    .shimmer {
+      position: relative;
+      overflow: hidden;
+      background-color: #16293b98;
+    }
+
+    .shimmer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(to right,
+          transparent,
+          rgba(238, 236, 236, 0.389),
+          transparent);
+      animation: shimmer 1.5s infinite;
+    }
+
+    .active-page {
+      background-color: #428bca;
+      color: white;
+    }
+
+    .pag_page_number.active-page:hover {
+      background-color: #428bca;
+      /* Keeps the same color on hover for the active page */
+    }
+  </style>
+  <base href="/your-subdirectory/">
+</head>
+
+<div class="grid h-screen place-items-center bg-gray-800">
+  <div class="font-bold text-3xl w-full h-full flex justify-center items-center bg-white">
+    <!-- loader start  -->
+    <div #mainLoader class="main_loader w-full h-full">
+      <div class="skeleton-cover flex w-[100vw] h-[100vh] bg-[white] justify-center items-center">
+        <div class="  w-[50%] h-[90%] bg-[white] border-2 border-[#898383c7] shadow  overflow-hidden">
+          <div class="relative skeleton-header h-[27%] w-[100%] flex ">
+            <div
+              class="skeleton-header-left w-[29%] h-[98%] flex flex-col justify-center items-center gap-[20px]  overflow-hidden">
+              <div class="h-[135px] w-[135px] rounded-full shimmer"></div>
+              <div class="shimmer h-[6%] w-[80%] rounded-lg "></div>
+            </div>
+            <div class=" w-[71%] h-[99%] skeleton-header-middle flex flex-col gap-[10px]">
+              <div class="shimmer h-[20%] w-[40%] mt-[19px] mb-[5px] rounded-lg"></div>
+              <div class="shimmer h-[8%] w-[40%] rounded-lg"></div>
+              <div class="shimmer h-[8%] w-[40%] rounded-lg"></div>
+              <div class="shimmer h-[8%] w-[40%] rounded-lg"></div>
+            </div>
+            <div class=" z-[3] absolute shimmer bottom-[-168px] right-[38px] h-[11%] w-[4%] rounded-[5px]"></div>
+          </div>
+          <div class="skeleton-content h-[60%] w-[100%] flex justify-center items-center gap-[15px]  overflow-hidden">
+            <div
+              class="skeleton-content-left w-[48.5%] h-[98%] flex flex-col justify-center items-center gap-[17px] overflow-hidden">
+              <div class="shimmer h-[28%] w-[90%] rounded-lg "></div>
+              <div class="shimmer h-[28%] w-[90%] rounded-lg "></div>
+              <div class="shimmer h-[28%] w-[90%] rounded-lg "></div>
+            </div>
+            <div
+              class="skeleton-content-right w-[48.5%] h-[98%] flex flex-col justify-center items-center gap-[17px] overflow-hidden">
+              <div class="shimmer h-[28%] w-[90%] rounded-lg "></div>
+              <div class="shimmer h-[28%] w-[90%] rounded-lg "></div>
+              <div class="shimmer h-[28%] w-[90%] rounded-lg "></div>
+            </div>
+          </div>
+          <div class="skeleton-footer h-[13%] w-[100%] flex justify-center items-center overflow-hidden">
+            <div class="shimmer h-[35%] w-[28%] rounded-md"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- loader end  -->
+    <div
+      class="main w-[50%] h-[90%] border-2 border-[#898383c7] bg-white flex flex-col gap-[7px] justify-center items-center">
+      <div class="upper w-[94%] h-[27%] flex gap-[5px] text-[#1d1d1d]">
+        <div class="profile h-full w-[25%] flex flex-col gap-[7px]">
+          <div class="pro_img w-[100%] h-[88%] flex justify-center items-center">
+            <div
+              class="p_img w-[9vw] h-[9vw] box-border rounded-full bg-[white] border-2 border-[#b0b0b0e9] flex justify-center items-center">
+              <div
+                class="img_circle w-[8.5vw] h-[8.5vw] box-border rounded-full bg-[#e9e9e952] flex justify-center items-center object-contain object-center overflow-hidden">
+                <img [src]="userData.avatar_url || '../assets/img/No_user.png' " alt="image" class="text-[15px]" />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pro_github_url w-[100%] h-[12%] text-[0.7vw] font-medium flex flex-col justify-center items-center overflow-hidden">
+            https://github.com/{{ userData.login || "error" }}
+          </div>
+        </div>
+        <div class="profile_about h-full w-[75%] p-[15px] flex flex-row gap-[10px] ">
+          <div class="p_about_data w-[45%] h-[90%] ">
+            <div class="about_main w-full h-[90%] flex flex-col gap-[2px] font-medium bg-green-00 ">
+              <div class="name w-[100%] h-[36%] text-[2.1vw] text-[#201f1f] overflow-hidden bg-fuchsia-00">
+                <p class="overflow-hidden w-[100%] h-[98%] flex items-start">
+                  {{userData.name || "User name" }}
+                </p>
+              </div>
+              <div class="bio w-[100%] h-[21%] text-[0.88vw] text-[#201f1f] overflow-hidden bg-fuchsia-00">
+                <p class="truncate w-[100%] h-[98%] flex items-center">
+                  {{ userData.bio || "Bio" }}
+                </p>
+              </div>
+              <div class="location w-[100%] h-[21%] text-[0.88vw] text-[#201f1f] overflow-hidden bg-fuchsia-00">
+                <p class="truncate w-[100%] h-[98%] flex items-center">
+                  {{ userData.location || "Location" }}
+                </p>
+              </div>
+              <div class="social w-[100%] h-[21%] text-[0.88vw] text-[#201f1f] overflow-hidden bg-fuchsia-00">
+                <p class="truncate w-[100%] h-[98%] flex items-center">
+                  Twitter : {{ userData.twitter_username || "null" }}
+                </p>
+              </div>
+            </div>
+            <div class="about_gap w-full h-[20%]"></div>
+          </div>
+          <div class="user_id_input h-[100%] w-[100%] flex flex-col justify-center items-center ">
+            <div class="user_input_main w-[100%] h-[80%] flex  gap-[7px] justify-center items-center ">
+              <div class="user_input w-[100%] h-[25%] flex gap-[8px] justify-end items-center ">
+                <input type="search" [(ngModel)]="githubId" (keyup.enter)="saveGithubId()"
+                  class="w-[45%] h-[90%] border-2 rounded-[5px] border-[#413d3d96] text-[13px] font-[500] px-[5px]"
+                  placeholder="Enter github user id" />
+                <button (click)="saveGithubId()"
+                  class="submitbtn w-[12%] h-[90%] border-2 rounded-[5px] border-[#413d3d96] text-[13px] font-[500] p-[2px] hover:bg-[#c2e1ff90] hover:border-[#4989c1] ">
+                  <p class=" h-[15px] w-[100%] flex justify-center items-center text-[#817e7e] hover:text-[#4989c1]">
+                    Find
+                  </p>
+                </button>
+              </div>
+            </div>
+            <div class="relative select_repo_range h-[20%] w-[100%] flex justify-end items-end z-[2] ">
+              <input type="number" min="1" max="100"
+                class=" absolute  bottom-[-25px] right-[-1px] w-[30px] h-[21px] px-[3px] text-[12px] rounded-[4px] border-2  text-[#585454] border-[#413d3d96] placeholder:text-[#585454]"
+                placeholder="10" value="10" [(ngModel)]="repo_limit" />
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div
+        class="relative mid w-[94%] h-[60%] flex flex-wrap justify-between items-start box-border overflow-x-auto mt-[12px] gap-y-[15px] ">
+        <div #msgNoRepo class="msg_no_repo absolute w-full h-[100%] bg-[#fafafa]">
+          <p class="text-[#7e76765f] w-full h-[100%] self-end flex justify-center items-center">Repository Data</p>
+        </div>
+        <div *ngFor="let repo of repoData"
+          class="z-[2] github_repo w-[47%] h-[30%] border-2 border-[#898383c7] bg-[#b0b0b010] font-medium flex flex-col gap-[5px] items-center justify-center px-[5px]">
+          <div class="repo_content w-[98%] h-[99%] flex flex-col justify-center items-center">
+            <div class="repo_title w-[98%] h-[35%] text-[25px] font-[640] text-[#4989c1] overflow-hidden">
+              <p class="truncate w-[70%] h-[95%] flex items-start">
+                {{ repo.name }}
+              </p>
+            </div>
+            <div class="repo_discription w-[98%] h-[27%] text-[14px] bg-indigo-00 text-[#393939]">
+              <p class="truncate w-[90%] h-[95%] flex items-center">
+                {{ repo.description || 'No description available' }}
+              </p>
+            </div>
+            <div class="repo_techStack w-[98%] h-[28%] flex items-center ">
+              <div
+                class="tech_main_range w-[80%] text-[10px] flex flex-row gap-[10px] items-center text-[#eaeaea] overflow-hidden ">
+                <span class="tech_block p-[6px] h-[24px] flex items-center justify-center rounded-[4px] bg-[#428bca]"
+                  *ngFor="let language of repo.languages">
+                  <p class="w-[95%] h-[98%] flex justify-center items-center">
+                    {{ language==null?'null':language }}
+                  </p>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+      <div class="low w-[94%] h-[13%] flex flex-col justify-center items-center">
+        <div class="pagination_main w-[60%] h-[75%] flex flex-col gap-[4px] justify-center items-center">
+          <div class="pagination w-[100%] h-[68%] text-[12px] font-[540] flex flex-row justify-center items-center">
+            <button *ngIf="repoData.length > 0"
+              class="pag_prev border-[1px] w-[32px] h-[30px] border-[#b2b2b2] flex justify-center items-center text-[#428bca] hover:bg-[#cee8f4ee]"
+              (click)="changePage(page - 1)" [disabled]="page === 1">
+              <p>prv</p>
+            </button>
+            <div class="btn_range_fixed flex flex-row justify-center items-center">
+              <div *ngIf="totalPages.length > 0" class="pagination flex">
+                <button *ngFor="let pageNum of totalPages"
+                  class="pag_page_number border-y-[1px] border-r-[1px] w-[32px] h-[30px] border-[#b2b2b2] flex justify-center items-center text-[#428bca] hover:bg-[#f1f1f1ee]"
+                  [value]="pageNum" (click)="changePage(pageNum)" [ngClass]="{'active-page': pageNum === page}">
+                  {{ pageNum }}
+                </button>
+              </div>
+            </div>
+            <button *ngIf="repoData.length > 0"
+              class="pag_next border-y-[1px] border-r-[1px] w-[32px] h-[30px] border-[#b2b2b2] flex justify-center items-center text-[#428bca] hover:bg-[#cee8f4ee]"
+              (click)="changePage(page + 1)" [disabled]="page === totalPages.length">
+              nxt
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
   </div>
 </div>
