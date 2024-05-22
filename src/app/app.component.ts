@@ -72,6 +72,9 @@ export class AppComponent {
   async saveGithubId() {
     if (this.githubId && this.repo_limit > 0 && this.repo_limit <= 100) {
       try {
+        this.cachedRepoData = {};
+        this.repoData = [];
+        
         this.msgNoRepo.nativeElement.style.display = 'none';
         this.mainLoader.nativeElement.style.display = 'block';
         const data = await this.apiService.getData(this.githubId).toPromise();
